@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html ng-app="app">
+<head>
+<title>MEAN Todo :)</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- JS -->
+<!-- angular -->
+<script src="js/dependencies/angular.min.js"></script>
+<script src="js/mine/main.js"></script>
+<script src="js/mine/todoController.js"></script>
+
+<!-- bootstrap and jquery-->
+<script src="js/dependencies/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+    <body ng-controller="todoController" style="padding:5px;">
+    <header style="width:100%; color:white; background-color:#6f5499; padding:5px; text-align:center; margin-bottom:10px;">
+    	<h4>I've got things to do!</h4>
+    </header>
+		<div class="container">
+
+			<div class="alert alert-success alert-dismissable" ng-if="showSuccessMessage">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+  				<strong>Success!</strong> {{successMessage}}.
+  			</div>
+
+			<div class="alert alert-danger alert-dismissable" ng-if="showErrorMessage">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+  				<strong>Error!</strong> {{errorMessage}}
+  			</div>
+
+			<div class="row">
+				<div class="col col-sm-8">
+					<div class="panel panel-default" style="margin-top:50px;">
+						<div class="panel-heading">
+					    	<h3 class="panel-title">My List</h3>
+						</div>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<td><b>#</b></td>
+									<td><b>To do</b></td>
+									<td><b>Date created</b></td>
+									<td></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="todo in todos">
+									<td><b>{{$index + 1}}</b></td>
+									<td>{{todo.message}}</td>
+									<td>{{todo.dateCreated | date}}</td>
+									<td align="center">
+										<div class="btn btn-success btn-xs" ng-click="showEditTodoModal(todo)" style="margin-right:7px;">
+											<span class="glyphicon glyphicon-edit"></span>
+										</div>
+										<div class="btn btn-danger btn-xs" ng-click="deleteTodo(todo)">
+											<span class="glyphicon glyphicon-remove"></span>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col col-sm-4">
+					<div class="jumbotron" style="margin-top:50px;">
+						<h4 align="center">Add todo here</h4>
+						<form name="form">
+							<div class="form-group">
+								<textarea rows="3"
+								class="form-control" ng-model="todoMessage" placeholder="Bible study by 10am"></textarea>
+							</div>
+							<div class="form-group">
+								<button class="btn btn-primary" ng-click="addTodo()">Add</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="editTodoModal" role="dialog" aria-labelledby="todoModalLabel">
+			<div class="modal-dialog modal-sm" role="document" style="margin-top:20px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="todoModalLabel">Edit todo</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<textarea type="text" class="form-control" ng-model="todoToEdit.message" rows="3"></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">				
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary" ng-click="editTodo()">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+    </body>
+</html>
